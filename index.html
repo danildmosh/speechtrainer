@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Практика английского</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: #f9f9f9;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .theme-selector {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .phrase-list {
+      max-width: 600px;
+      margin: auto;
+      padding: 10px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .phrase-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .phrase-item:last-child {
+      border-bottom: none;
+    }
+
+    .phrase-text {
+      flex: 1;
+    }
+
+    .play-button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    .play-button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Практика английского</h1>
+  <div class="theme-selector">
+    <label for="theme">Выберите тему:</label>
+    <select id="theme">
+      <option value="general">Общие приветствия</option>
+      <option value="purpose">Цель визита</option>
+      <option value="travel">План поездки</option>
+      <option value="financial">Финансовое положение</option>
+      <option value="family">Семья и связи</option>
+      <option value="previous">Предыдущие поездки</option>
+      <option value="documents">Документы</option>
+      <option value="clarifications">Уточнения</option>
+      <option value="ending">Завершение интервью</option>
+    </select>
+  </div>
+  <div id="phrases" class="phrase-list"></div>
+
+  <script>
+    const phrasesData = {
+      general: [
+        { en: "Good morning.", ru: "Доброе утро." },
+        { en: "Good afternoon.", ru: "Добрый день." },
+        { en: "My name is John Smith.", ru: "Меня зовут Джон Смит." },
+        { en: "Nice to meet you.", ru: "Приятно познакомиться." },
+      ],
+      purpose: [
+        { en: "I am applying for a tourist visa.", ru: "Я подаю заявление на туристическую визу." },
+        { en: "I want to visit the United States for tourism.", ru: "Я хочу посетить США с целью туризма." },
+        { en: "I plan to stay for 14 days.", ru: "Я планирую остаться на 14 дней." },
+        { en: "I plan to stay for 3 weeks.", ru: "Я планирую остаться на 3 недели." },
+        { en: "My main destinations are New York and California.", ru: "Мои основные направления — это Нью-Йорк и Калифорния." },
+        { en: "I want to see famous places like Times Square and the Grand Canyon.", ru: "Я хочу увидеть знаменитые места, такие как Таймс-сквер и Гранд-Каньон." },
+      ],
+      travel: [
+        { en: "I plan to travel from June 1 to June 14.", ru: "Я планирую путешествовать с 1 июня по 14 июня." },
+        { en: "I have already booked my tickets and accommodation.", ru: "Я уже забронировал билеты и жильё." },
+        { en: "I will be staying at the Marriott Hotel in New York.", ru: "Я буду останавливаться в отеле Marriott в Нью-Йорке." },
+        { en: "Here is my travel itinerary.", ru: "Вот мой маршрут поездки." },
+      ],
+      financial: [
+        { en: "I will cover all expenses myself.", ru: "Я сам оплачу все расходы." },
+        { en: "My trip is funded by my family.", ru: "Мою поездку финансирует моя семья." },
+        { en: "I work as a software engineer at TechCorp.", ru: "Я работаю программистом в компании TechCorp." },
+        { en: "My monthly salary is 3,000 USD.", ru: "Моя месячная зарплата составляет 3,000 долларов США." },
+        { en: "Here are my bank statements.", ru: "Вот мои банковские выписки." },
+      ],
+      family: [
+        { en: "I live with my spouse and children.", ru: "Я живу с супругой и детьми." },
+        { en: "I have property in Moscow.", ru: "У меня есть недвижимость в Москве." },
+        { en: "I have no plans to stay in the United States permanently.", ru: "У меня нет планов оставаться в США навсегда." },
+        { en: "I will return to Russia after my trip.", ru: "Я вернусь в Россию после поездки." },
+        { en: "My family is staying in Russia.", ru: "Моя семья остаётся в России." },
+      ],
+      previous: [
+        { en: "I have traveled to France, Germany, and Italy.", ru: "Я путешествовал во Францию, Германию и Италию." },
+        { en: "This is my first time applying for a U.S. visa.", ru: "Я впервые подаю заявку на визу в США." },
+        { en: "I have never overstayed in another country.", ru: "Я никогда не превышал срок пребывания в другой стране." },
+      ],
+      documents: [
+        { en: "Here is my passport.", ru: "Вот мой паспорт." },
+        { en: "Here is my invitation letter.", ru: "Вот моё приглашение." },
+        { en: "Here is my employment letter.", ru: "Вот моё письмо с работы." },
+        { en: "Here are my financial documents.", ru: "Вот мои финансовые документы." },
+        { en: "Do you need any additional documents?", ru: "Вам нужны дополнительные документы?" },
+      ],
+      clarifications: [
+        { en: "Could you repeat the question, please?", ru: "Могли бы вы повторить вопрос, пожалуйста?" },
+        { en: "I’m sorry, I don’t understand.", ru: "Извините, я не понимаю." },
+        { en: "Can I answer in Russian?", ru: "Можно я отвечу на русском?" },
+        { en: "How long will the process take?", ru: "Сколько времени займёт процесс?" },
+      ],
+      ending: [
+        { en: "Thank you for your time.", ru: "Спасибо за ваше время." },
+        { en: "Have a nice day.", ru: "Хорошего дня." },
+        { en: "When will I receive the decision?", ru: "Когда я получу решение?" },
+        { en: "I will wait for further instructions.", ru: "Я буду ждать дальнейших инструкций." },
+      ],
+    };
+
+    const themeSelector = document.getElementById("theme");
+    const phrasesContainer = document.getElementById("phrases");
+
+    // Function to populate phrases based on selected theme
+    function loadPhrases(theme) {
+      const phrases = phrasesData[theme] || [];
+      phrasesContainer.innerHTML = ""; // Clear existing phrases
+
+      phrases.forEach((phrase) => {
+        const phraseItem = document.createElement("div");
+        phraseItem.className = "phrase-item";
+
+        const phraseText = document.createElement("div");
+        phraseText.className = "phrase-text";
+        phraseText.innerHTML = `<strong>RU:</strong> ${phrase.ru} <br> <strong>EN:</strong> ${phrase.en}`;
+
+        const playButton = document.createElement("button");
+        playButton.className = "play-button";
+        playButton.textContent = "Проиграть";
+        playButton.onclick = () => playAudio(phrase.en);
+
+        phraseItem.appendChild(phraseText);
+        phraseItem.appendChild(playButton);
+        phrasesContainer.appendChild(phraseItem);
+      });
+    }
+
+    // Function to play audio using Google Text-to-Speech API
+    function playAudio(text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "en-US";
+      window.speechSynthesis.speak(utterance);
+    }
+
+    // Load initial theme
+    themeSelector.addEventListener("change", (e) => {
+      loadPhrases(e.target.value);
+    });
+
+    loadPhrases(themeSelector.value);
+  </script>
+</body>
+
+</html>
